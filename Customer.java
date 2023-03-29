@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.*;
 
 public class Customer {
@@ -60,19 +59,6 @@ public class Customer {
         System.out.println("Account status: " + (accIsFrozen?"Frozen":"Not frozen"));
         System.out.println("");
     }
-
-    // void authenticateOld(){
-    //     checkIfAccountIsFrozen();
-    //     for(int i = 3; i > 0; i--){
-    //         System.out.println("Please input your password:");
-    //         String pwd = getUserInput();
-    //         if(pwd.equals(pin)) return;
-    //         System.out.printf("Wrong password. %d attempts left.", i);
-    //     }
-    //     accIsFrozen = true;
-    //     System.out.println("You have run out of attempts. Your account is blocked. Please contact our customer support.");
-    //     System.exit(0);
-    // }
     
     void topUp(){
         System.out.println("Initiate topup procedure...\n");
@@ -103,7 +89,7 @@ public class Customer {
         } else {
             cashbackAmt = amt * cashback;
         }
-        balance = balance - amt + cashbackAmt; // deducts amt + cashback from balance
+        balance = balance - amt + cashbackAmt; // deducts (amt + cashback) from balance
         System.out.println("Purchase successful. Deducted from balance: " + formatIDR(amt));
         System.out.printf("You got %s cashback!\n", (amt>1000000?(cashbackOverOneMioStr):(cashbackStr)));
         System.out.println(formatIDR(cashbackAmt) + " has been returned to your account.");
@@ -151,12 +137,6 @@ public class Customer {
     boolean getIsFrozen(){
         return accIsFrozen;
     }
-
-    // String getBalanceIDR(){
-    //     Formatter formatter = new Formatter();
-    //     formatter.format("IDR%, d", (int)balance);
-    //     return formatter.toString();
-    // }
     
     String formatIDR(int a){
         Formatter formatter = new Formatter();
@@ -229,7 +209,7 @@ public class Customer {
         boolean cont = true;
         int v = 1;
         while(cont){
-            v = Customer.authenticate(); // v represents the index of current customer in the CustARrLi ArrayList
+            v = Customer.authenticate(); // v represents the index of current customer in the CustArrLi ArrayList
             if(v < 0){
                 continue;
             }
@@ -286,18 +266,5 @@ public class Customer {
                 ". x O O                                             O O x .\n" +
                 ". x x x x x x x x x x x x x x x x x x x x x x x x x x x x .\n" +
                 ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n");
-
-    }
-
-    public static void clearTerminal() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                Runtime.getRuntime().exec("clear");
-            }
-        } catch (IOException | InterruptedException ex) {
-            System.out.println("Error when clearing terminal.");
-        }
     }
 }
