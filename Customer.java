@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.*;
 
 public class Customer {
@@ -213,8 +214,11 @@ public class Customer {
             if(v < 0){
                 continue;
             }
+            boolean exit = false;
             while(cont){
                 if(AppSwalayanTiny.CustArrLi.get(v).getIsFrozen()){
+                    break;
+                } else if(exit){
                     break;
                 }
                 if(v >= 0 && v <= AppSwalayanTiny.CustArrLi.size()){
@@ -224,7 +228,6 @@ public class Customer {
                     System.out.println("3. Show account information");
                     System.out.println("4. Exit");
                     int z = Integer.parseInt(getUserInput());
-                    boolean wrongPin = false;
                     switch(z){
                         case 1: {
                             AppSwalayanTiny.CustArrLi.get(v).topUp();
@@ -238,15 +241,13 @@ public class Customer {
                             AppSwalayanTiny.CustArrLi.get(v).display();
                             break;
                         } 
-                        case 4: {
-                            System.out.println("Thank you for using Swalayan App.");
-                            System.out.println("Have a nice day.");
-                            System.exit(0);
+                        default: {
+                            // System.out.println("Thank you for using Swalayan App.");
+                            // System.out.println("Have a nice day.");
+                            exit = true;
+                            clearTerminal();
                             break;
                         }
-                    }
-                    if(wrongPin){
-                        break;
                     }
                 } else {
                     break;
@@ -266,5 +267,17 @@ public class Customer {
                 ". x O O                                             O O x .\n" +
                 ". x x x x x x x x x x x x x x x x x x x x x x x x x x x x .\n" +
                 ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . .\n");
+    }
+
+    public static void clearTerminal() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                Runtime.getRuntime().exec("clear");
+            }
+        } catch (IOException | InterruptedException ex) {
+            System.out.println("Error when clearing terminal..");
+        }
     }
 }
