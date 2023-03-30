@@ -9,7 +9,7 @@ public class Customer {
 
     private String name;
     private double balance;
-    private String custType;
+    private String custType; // first 2 digits from customer ID
     private String custTypeStr; // customer type in String
     private double cashback; // cashback notated in double.  0.02 = 2%
     private double cashbackOverOneMio; // cashback if transaction is over IDR 1 mio
@@ -56,7 +56,6 @@ public class Customer {
         System.out.println("Customer ID: " + custID);
         System.out.println("Balance: " + formatIDR(balance));
         System.out.println("Customer type: " + custTypeStr);
-        // String accStatus = accIsFrozen?"frozen":"not frozen";
         System.out.println("Account status: " + (accIsFrozen?"Frozen":"Not frozen"));
         System.out.println("");
     }
@@ -90,7 +89,7 @@ public class Customer {
         } else {
             cashbackAmt = amt * cashback;
         }
-        balance = balance - amt + cashbackAmt; // deducts (amt + cashback) from balance
+        balance -= amt - cashbackAmt; // deducts (amt - cashback) from balance
         System.out.println("Purchase successful. Deducted from balance: " + formatIDR(amt));
         System.out.printf("You got %s cashback!\n", (amt>1000000?(cashbackOverOneMioStr):(cashbackStr)));
         System.out.println(formatIDR(cashbackAmt) + " has been returned to your account.");
